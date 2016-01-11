@@ -7,4 +7,4 @@ commands:
   bukkitpiano:
     usage: /bukkitpiano
     description: BukkitPiano main command
-    permission: bukkitpiano.permission
+    permission: piano.play

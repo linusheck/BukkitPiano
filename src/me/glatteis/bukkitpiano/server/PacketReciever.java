@@ -46,6 +46,18 @@ public class PacketReciever {
                             p.sendMessage("BukkitPiano just requested a login. Type " +
                                     ChatColor.AQUA + "[/bukkitpiano confirm]" + ChatColor.RESET + " if this is you.");
                             PianoPlayer pianoPlayer = new PianoPlayer(p, loginPacket.programID);
+                            for (PianoPlayer pianoPlayer2 : main.confirmationPlayers) {
+                                if (pianoPlayer2.player.equals(pianoPlayer.player)) {
+                                    main.confirmationPlayers.remove(pianoPlayer2);
+                                    break;
+                                }
+                            }
+                            for (PianoPlayer pianoPlayer2 : main.pianoPlayers) {
+                                if (pianoPlayer2.player.equals(pianoPlayer.player)) {
+                                    main.pianoPlayers.remove(pianoPlayer2);
+                                    break;
+                                }
+                            }
                             main.confirmationPlayers.add(pianoPlayer);
                             break;
                         }

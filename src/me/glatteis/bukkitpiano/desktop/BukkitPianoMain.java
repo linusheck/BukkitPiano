@@ -22,6 +22,7 @@ public class BukkitPianoMain {
     private JFrame frame;
     private JPanel panel;
     protected JLabel statusLabel;
+    protected JButton connectButton;
 
     private BukkitPianoSender sender;
 
@@ -63,8 +64,8 @@ public class BukkitPianoMain {
         playerTextField.setToolTipText("Player Name");
         panel.add(playerTextField);
 
-        final JButton connectButton = new JButton("Connect");
-        connectButton.setBounds(50, 250, 150, 50);
+        connectButton = new JButton("Connect");
+        connectButton.setBounds(50, 250, 400, 50);
         connectButton.setBackground(Color.LIGHT_GRAY);
         connectButton.addActionListener(new ActionListener() {
             @Override
@@ -82,17 +83,6 @@ public class BukkitPianoMain {
         });
         panel.add(connectButton);
 
-        JButton updateButton = new JButton("Update Devices");
-        updateButton.setBounds(300, 250, 150, 50);
-        updateButton.setBackground(Color.LIGHT_GRAY);
-        updateButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                updateDevices();
-            }
-        });
-        panel.add(updateButton);
-
         statusLabel = new JLabel();
         statusLabel.setBounds(50, 400, 400, 32);
         statusLabel.setFont(new Font("Arial", 0, 20));
@@ -101,6 +91,12 @@ public class BukkitPianoMain {
         updateDevices();
 
         frame.setVisible(true);
+
+        try {
+            serverAddress = InetAddress.getLocalHost();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
     }
 
     private void updateDevices() {
