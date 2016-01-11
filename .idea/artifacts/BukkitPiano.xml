@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="BukkitPiano">
+    <output-path>F:/TestServer/plugins</output-path>
+    <root id="archive" name="BukkitPiano.jar">
+      <element id="module-output" name="BukkitPiano" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+      </element>
+    </root>
+  </artifact>
+</component>

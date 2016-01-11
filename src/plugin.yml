@@ -1,0 +1,10 @@
+name: BukkitPiano
+version: 0.8
+main: me.glatteis.bukkitpiano.server.ServerMain
+author: glatteis
+
+commands:
+  bukkitpiano:
+    usage: /bukkitpiano
+    description: BukkitPiano main command
+    permission: bukkitpiano.permission
