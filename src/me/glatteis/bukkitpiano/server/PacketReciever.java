@@ -39,6 +39,7 @@ public class PacketReciever {
             while (true) {
                 socket.receive(packet);
                 Object o = PackMethods.unpack(packet.getData());
+                System.out.print(o.toString());
                 if (o instanceof LoginPacket) {;
                     LoginPacket loginPacket = ((LoginPacket) o);
                     for (Player p : Bukkit.getOnlinePlayers()) {

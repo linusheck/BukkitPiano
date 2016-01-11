@@ -26,7 +26,7 @@ public class MusicalStuff {
 
         if (octave < 0) {
             instrument = Instrument.BASS_GUITAR;
-            octave++;
+            octave += 2;
         } else {
             instrument = Instrument.PIANO;
         }

@@ -36,7 +36,6 @@ public class BukkitPianoSender implements Receiver {
 
     @Override
     public void send(MidiMessage message, long timeStamp) {
-        System.out.println(timeStamp);
         if (timeStamp == savedTimeStamp) return; //No double notes!
         byte[] byteMessage = message.getMessage();
         if (byteMessage[0] != -112 || !isConnected) return; //We only want ON messages.
@@ -59,13 +58,11 @@ public class BukkitPianoSender implements Receiver {
     public void sendConnect(String username) {
         LoginPacket loginPacket = new LoginPacket();
         loginPacket.mcName = username;
-        System.out.println(username);
         loginPacket.programID = main.id;
         int retry = 3;
         while (true) {
             try {
                 byte[] packet= PackMethods.pack(loginPacket);
-                System.out.println(packet.length);
                 DatagramPacket datagramPacket = new DatagramPacket(packet, packet.length, main.serverAddress, 25565);
                 clientSocket.send(datagramPacket);
                 clientSocket.setSoTimeout(1500);
@@ -77,7 +74,7 @@ public class BukkitPianoSender implements Receiver {
                 if (retry == 0) return;
                 retry--;
                 main.statusLabel.setText("Connection unsuccessful.");
-                main.connectButton.setBackground(new Color(200, 0, 0));
+                main.connectButton.setBackground(new Color(200, 54, 42));
             }
         }
 
@@ -94,19 +91,22 @@ public class BukkitPianoSender implements Receiver {
                 //Well, we don't have to close that.
             }
         }
-        clientSocket.close();
 
-        if (!isConnected) return;
 
-        QuitPacket quitPacket = new QuitPacket();
-        quitPacket.id = main.id;
+        if (isConnected) {
+            QuitPacket quitPacket = new QuitPacket();
+            quitPacket.id = main.id;
 
-        try {
-            byte[] packet = PackMethods.pack(quitPacket);
-            DatagramPacket datagramPacket = new DatagramPacket(packet, packet.length, main.serverAddress, 25565);
-            clientSocket.send(datagramPacket);
-        } catch (IOException e) {
-            e.printStackTrace();
+            try {
+                byte[] packet = PackMethods.pack(quitPacket);
+                DatagramPacket datagramPacket = new DatagramPacket(packet, packet.length, main.serverAddress, 25565);
+                clientSocket.send(datagramPacket);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+
+
+        clientSocket.close();
     }
 }
