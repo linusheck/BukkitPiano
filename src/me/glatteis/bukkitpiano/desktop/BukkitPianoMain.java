@@ -24,6 +24,9 @@ public class BukkitPianoMain {
     protected JLabel statusLabel;
     protected JButton connectButton;
 
+    protected int octave = 0;
+    protected boolean velocitySensitivity;
+
     private BukkitPianoSender sender;
 
     protected InetAddress serverAddress;
@@ -37,6 +40,7 @@ public class BukkitPianoMain {
         frame.setSize(500, 500);
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
+                frame.setVisible(false);
                 sender.close();
                 System.exit(0);
             }
@@ -87,6 +91,31 @@ public class BukkitPianoMain {
         statusLabel.setBounds(50, 400, 400, 32);
         statusLabel.setFont(new Font("Arial", 0, 20));
         panel.add(statusLabel);
+
+        final Integer[] octaves = {0, 1, 2, 3, 4, 5};
+        String[] strings = new String[octaves.length];
+        for (int i = 0; i < octaves.length; i++) {
+            strings[i] = "+" + octaves[i] + " Octaves";
+        }
+        final JComboBox<String> comboBox = new JComboBox<String>(strings);
+        comboBox.setBounds(50, 350, 200, 30);
+        comboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                octave = octaves[comboBox.getSelectedIndex()];
+            }
+        });
+        panel.add(comboBox);
+
+        final JCheckBox velocityButton = new JCheckBox("Velocity Sensitivity");
+        velocityButton.setBounds(260, 350, 200, 30);
+        velocityButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                velocitySensitivity = velocityButton.isSelected();
+            }
+        });
+        panel.add(velocityButton);
 
         updateDevices();
 

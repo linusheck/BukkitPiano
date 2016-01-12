@@ -39,7 +39,17 @@ public class PacketReciever {
             while (true) {
                 socket.receive(packet);
                 Object o = PackMethods.unpack(packet.getData());
-                if (o instanceof LoginPacket) {;
+                if (o instanceof NotePacket) {
+                    NotePacket notePacket = (NotePacket) o;
+                    byte[] midiBytes = notePacket.midiData;
+                    for (PianoPlayer pianoPlayer : main.pianoPlayers) {
+                        if (pianoPlayer.id == notePacket.id) {
+                            musicalStuff.playNote(pianoPlayer.player, midiBytes);
+                            break;
+                        }
+                    }
+                }
+                else if (o instanceof LoginPacket) {
                     LoginPacket loginPacket = ((LoginPacket) o);
                     for (Player p : Bukkit.getOnlinePlayers()) {
                         if (p.getName().equals(loginPacket.mcName)) {
@@ -64,16 +74,7 @@ public class PacketReciever {
                     }
                     socket.send(packet);
                 }
-                else if (o instanceof NotePacket) {
-                    NotePacket notePacket = (NotePacket) o;
-                    byte[] midiBytes = notePacket.midiData;
-                    for (PianoPlayer pianoPlayer : main.pianoPlayers) {
-                        if (pianoPlayer.id == notePacket.id) {
-                            musicalStuff.playNote(pianoPlayer.player, midiBytes);
-                            break;
-                        }
-                    }
-                }
+
                 else if (o instanceof QuitPacket) {
                     QuitPacket quitPacket = (QuitPacket) o;
                     for (PianoPlayer pianoPlayer : main.pianoPlayers) {

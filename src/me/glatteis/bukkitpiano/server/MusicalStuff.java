@@ -2,8 +2,7 @@ package me.glatteis.bukkitpiano.server;
 
 import me.glatteis.bukkitpiano.NoteHandler;
 import org.bukkit.Bukkit;
-import org.bukkit.Instrument;
-import org.bukkit.Note;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 /**
@@ -14,43 +13,24 @@ public class MusicalStuff {
     public void playNote(Player player, byte[] midiData) {
 
         byte note = midiData[1];
+        int bukkitNote = note - 6;
 
-        int octave = ((note + 6) / 12) - 3;
-        int currentNote = note % 12;
+        Sound sound;
 
-        NoteHandler.BukkitPianoNote bukkitPianoNote = NoteHandler.getNote(currentNote);
-
-        if (bukkitPianoNote == null) return;
-
-        Instrument instrument;
-
-        if (octave < 0) {
-            instrument = Instrument.BASS_GUITAR;
-            octave += 2;
+        if (bukkitNote > 24) {
+            bukkitNote -= 24;
+            sound = Sound.NOTE_PIANO;
         } else {
-            instrument = Instrument.PIANO;
+            sound = Sound.NOTE_BASS;
         }
 
-        if (octave < 0 || octave > 1) {
-            if (octave == -1) {
-                switch (bukkitPianoNote.tone) {
-                    case C:
-                        instrument = Instrument.BASS_DRUM;
-                        break;
-                    case D:
-                        instrument = Instrument.SNARE_DRUM;
-                        break;
-                    default:
-                        instrument = Instrument.STICKS;
-                }
-            } else {
-                instrument = Instrument.STICKS;
-            }
-            octave = 0;
-        }
+        if (bukkitNote > 24 || bukkitNote < 0) return;
+
+        float velocity = midiData[2] / 127F;
+        float pitch = NoteHandler.getPitch(bukkitNote);
 
         for (Player p : Bukkit.getOnlinePlayers()) {
-            p.playNote(player.getLocation(), instrument, new Note(octave, bukkitPianoNote.tone, bukkitPianoNote.sharp));
+            p.playSound(player.getLocation(), sound, velocity, pitch);
         }
     }
 }
