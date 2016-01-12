@@ -16,7 +16,7 @@ import java.net.SocketException;
 /**
  * Created by Linus on 10.01.2016.
  */
-public class PacketReciever {
+public class PacketReceiver {
 
     private DatagramPacket packet;
     private DatagramSocket socket;
@@ -25,7 +25,7 @@ public class PacketReciever {
 
     private ServerMain main;
 
-    public PacketReciever(ServerMain main) throws SocketException {
+    public PacketReceiver(ServerMain main) throws SocketException {
         this.main = main;
         socket = new DatagramSocket(25565);
         socket.setSoTimeout(1);

@@ -19,13 +19,13 @@ import java.util.List;
  */
 public class ServerMain extends JavaPlugin implements Listener {
 
-    private PacketReciever packetReciever;
+    private PacketReceiver packetReceiver;
 
     protected List<PianoPlayer> pianoPlayers;
     protected List<PianoPlayer> confirmationPlayers;
 
     public void onDisable() {
-        packetReciever.disable();
+        packetReceiver.disable();
     }
 
     public void onEnable() {
@@ -33,10 +33,10 @@ public class ServerMain extends JavaPlugin implements Listener {
         pianoPlayers = new ArrayList<PianoPlayer>();
         confirmationPlayers = new ArrayList<PianoPlayer>();
         try {
-            packetReciever = new PacketReciever(this);
+            packetReceiver = new PacketReceiver(this);
             new BukkitRunnable() {
                 public void run() {
-                    packetReciever.recievePacket();
+                    packetReceiver.recievePacket();
                 }
             }.runTaskTimerAsynchronously(this, 0, 1);
         } catch (SocketException e) {
