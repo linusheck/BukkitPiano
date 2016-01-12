@@ -38,7 +38,7 @@ public class BukkitPianoSender implements Receiver {
     public void send(MidiMessage message, long timeStamp) {
         if (timeStamp == savedTimeStamp) return; //No double notes!
         byte[] byteMessage = message.getMessage();
-        if (byteMessage[0] != -112 || !isConnected) return; //We only want ON messages.
+        if (byteMessage[0] != -112 || !isConnected | byteMessage[2] == 0) return; //We only want ON messages.
 
         NotePacket notePacket = new NotePacket();
 

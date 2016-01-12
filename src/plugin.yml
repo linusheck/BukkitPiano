@@ -1,5 +1,5 @@
 name: BukkitPiano
-version: 0.8
+version: 0.7
 main: me.glatteis.bukkitpiano.server.ServerMain
 author: glatteis
 

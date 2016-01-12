@@ -75,7 +75,7 @@ public class BukkitPianoMain {
                     serverAddress = InetAddress.getByName(ipTextField.getText());
                     statusLabel.setText("Found host " + serverAddress.toString());
                 } catch (UnknownHostException e1) {
-                    connectButton.setBackground(Color.RED);
+                    //
                 }
                 connectButton.setBackground(Color.GREEN);
                 sender.sendConnect(playerTextField.getText());
