@@ -30,6 +30,7 @@ public class BukkitPianoMain {
     private BukkitPianoSender sender;
 
     protected InetAddress serverAddress;
+    protected int port;
 
     public BukkitPianoMain() {
         sender = new BukkitPianoSender(this);
@@ -57,10 +58,16 @@ public class BukkitPianoMain {
         panel.add(title);
 
         final JTextField ipTextField = new JTextField();
-        ipTextField.setBounds(50, 100, 400, 32);
+        ipTextField.setBounds(50, 100, 300, 32);
         ipTextField.setFont(new Font("Arial", 0, 28));
         ipTextField.setToolTipText("Server IP");
         panel.add(ipTextField);
+
+        final JTextField portField = new JTextField("25565");
+        portField.setBounds(360, 100, 90, 32);
+        portField.setFont(new Font("Arial", 0, 28));
+        portField.setToolTipText("Port");
+        panel.add(portField);
 
         final JTextField playerTextField = new JTextField();
         playerTextField.setBounds(50, 150, 400, 32);
@@ -77,9 +84,12 @@ public class BukkitPianoMain {
                 try {
                     statusLabel.setText("Looking for host...");
                     serverAddress = InetAddress.getByName(ipTextField.getText());
+                    port = Integer.parseInt(portField.getText());
                     statusLabel.setText("Found host " + serverAddress.toString());
                 } catch (UnknownHostException e1) {
                     //
+                } catch (RuntimeException e1) {
+                    statusLabel.setText("This does not seem to be a valid port.");
                 }
                 connectButton.setBackground(Color.GREEN);
                 sender.sendConnect(playerTextField.getText());
@@ -109,6 +119,7 @@ public class BukkitPianoMain {
 
         final JCheckBox velocityButton = new JCheckBox("Velocity Sensitivity");
         velocityButton.setBounds(260, 350, 200, 30);
+        velocityButton.setSelected(true);
         velocityButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

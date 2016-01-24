@@ -66,7 +66,7 @@ public class BukkitPianoSender implements Receiver {
         while (true) {
             try {
                 byte[] packet= PackMethods.pack(loginPacket);
-                DatagramPacket datagramPacket = new DatagramPacket(packet, packet.length, main.serverAddress, 25565);
+                DatagramPacket datagramPacket = new DatagramPacket(packet, packet.length, main.serverAddress, main.port);
                 clientSocket.send(datagramPacket);
                 clientSocket.setSoTimeout(1500);
                 clientSocket.receive(datagramPacket);
