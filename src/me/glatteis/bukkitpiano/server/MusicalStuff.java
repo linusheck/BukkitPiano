@@ -19,9 +19,9 @@ public class MusicalStuff {
 
         if (bukkitNote > 24) {
             bukkitNote -= 24;
-            sound = Sound.NOTE_PIANO;
+            sound = Sound.BLOCK_NOTE_HARP;
         } else {
-            sound = Sound.NOTE_BASS;
+            sound = Sound.BLOCK_NOTE_BASS;
         }
 
         if (bukkitNote > 24 || bukkitNote < 0) return;

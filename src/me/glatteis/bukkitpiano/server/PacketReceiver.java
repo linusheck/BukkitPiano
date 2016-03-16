@@ -36,25 +36,15 @@ public class PacketReceiver {
 
     public void recievePacket() {
         try {
-            while (true) {
+            while (socket.getBroadcast()) {
                 socket.receive(packet);
                 Object o = PackMethods.unpack(packet.getData());
-                if (o instanceof NotePacket) {
-                    NotePacket notePacket = (NotePacket) o;
-                    byte[] midiBytes = notePacket.midiData;
-                    for (PianoPlayer pianoPlayer : main.pianoPlayers) {
-                        if (pianoPlayer.id == notePacket.id) {
-                            musicalStuff.playNote(pianoPlayer.player, midiBytes);
-                            break;
-                        }
-                    }
-                }
-                else if (o instanceof LoginPacket) {
+                if (o instanceof LoginPacket) {
                     LoginPacket loginPacket = ((LoginPacket) o);
                     for (Player p : Bukkit.getOnlinePlayers()) {
                         if (p.getName().equals(loginPacket.mcName)) {
-                            p.sendMessage("BukkitPiano just requested a login. Type " +
-                                    ChatColor.AQUA + "[/bukkitpiano confirm]" + ChatColor.RESET + " if this is you.");
+                            p.sendMessage("A BukkitPiano client just requested a login. Type " +
+                                    ChatColor.GOLD + "[/bukkitpiano confirm]" + ChatColor.RESET + " if this is you.");
                             PianoPlayer pianoPlayer = new PianoPlayer(p, loginPacket.programID);
                             for (PianoPlayer pianoPlayer2 : main.confirmationPlayers) {
                                 if (pianoPlayer2.player.equals(pianoPlayer.player)) {
@@ -74,7 +64,17 @@ public class PacketReceiver {
                     }
                     socket.send(packet);
                 }
-
+                if (main.pianoPlayers.isEmpty()) break;
+                if (o instanceof NotePacket) {
+                    NotePacket notePacket = (NotePacket) o;
+                    byte[] midiBytes = notePacket.midiData;
+                    for (PianoPlayer pianoPlayer : main.pianoPlayers) {
+                        if (pianoPlayer.id == notePacket.id) {
+                            musicalStuff.playNote(pianoPlayer.player, midiBytes);
+                            break;
+                        }
+                    }
+                }
                 else if (o instanceof QuitPacket) {
                     QuitPacket quitPacket = (QuitPacket) o;
                     for (PianoPlayer pianoPlayer : main.pianoPlayers) {
@@ -89,7 +89,7 @@ public class PacketReceiver {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            //Printing this would spam the console.
+            //
         }
     }
 
