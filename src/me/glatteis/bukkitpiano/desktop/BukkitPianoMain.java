@@ -25,7 +25,7 @@ public class BukkitPianoMain {
     protected JButton connectButton;
 
     protected int octave = 0;
-    protected boolean velocitySensitivity;
+    protected boolean velocitySensitivity = true;
 
     private BukkitPianoSender sender;
 

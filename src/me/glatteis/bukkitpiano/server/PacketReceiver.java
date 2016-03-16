@@ -74,8 +74,7 @@ public class PacketReceiver {
                             break;
                         }
                     }
-                }
-                else if (o instanceof QuitPacket) {
+                } else if (o instanceof QuitPacket) {
                     QuitPacket quitPacket = (QuitPacket) o;
                     for (PianoPlayer pianoPlayer : main.pianoPlayers) {
                         if (pianoPlayer.id == quitPacket.id) {
