@@ -27,7 +27,7 @@ public class PacketReceiver {
 
     public PacketReceiver(ServerMain main) throws SocketException {
         this.main = main;
-        socket = new DatagramSocket(25565);
+        socket = new DatagramSocket(25566);
         socket.setSoTimeout(1);
         byte[] buf = new byte[1080];
         packet = new DatagramPacket(buf, buf.length);
