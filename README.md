@@ -6,3 +6,5 @@ This was originally written by Linus(glatteis). All I did was added particles an
 You can find more information on this plugin ~~and a compiled JAR download~~ __OUTDATED__ on Spigot: https://www.spigotmc.org/threads/bukkitpiano.115115/
 
 I'll upload a compiled jar soon. Stay tuned.
+
+:O
