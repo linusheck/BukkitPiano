@@ -17,6 +17,7 @@ import java.util.List;
 
 /**
  * Created by Linus on 10.01.2016.
+ * Thanks Linus, awesome plugin! Updated for 1.16 by avixk on March 12th 2021
  */
 public class ServerMain extends JavaPlugin implements Listener {
 
@@ -29,7 +30,7 @@ public class ServerMain extends JavaPlugin implements Listener {
             "",
             "BukkitPiano is a plugin for playing the piano in Minecraft.",
             ChatColor.BLUE + "How can I play the piano in Minecraft?",
-            ChatColor.BLUE + "Step 1: " + ChatColor.RESET + "Download the BukkitPiano JAR from https://www.spigotmc.org/resources/16931/",
+            ChatColor.BLUE + "Step 1: " + ChatColor.RESET + "Download the BukkitPiano JAR from <insert dl link>",//TODO put the link there
             ChatColor.BLUE + "Step 2: " + ChatColor.RESET + "Plug in any MIDI controller.",
             ChatColor.BLUE + "Step 3: " + ChatColor.RESET + "Double click the JAR. If you have a mac, it might warn you about " +
                     "JARs being dangerous. BukkitPiano doesn't want do any harm. Just agree to open it.",
